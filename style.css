@@ -1,6 +1,6 @@
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 16px;
 }
 
@@ -12,9 +12,22 @@
 
 
 header {
+    display: inline;
     justify-content: space-around;
     padding: 10px;
     padding-top: 2px;
+    width: 100%;
+}
+
+.highScore {
+    color: var(--purple);
+    text-align: left;
+    float: left;
+}
+
+#countdown {
+    text-align: right;
+    float: right;
 }
 
 body {
@@ -25,6 +38,8 @@ body {
     flex-direction: column;
     width: 100vw;
     height: 40vh;
+    line-height: 1.5;
+    font-size: 1rem;
     justify-content: center;
     align-items: center;
 }
@@ -32,6 +47,7 @@ body {
 .container {
     width: 500px;
     max-width: 50%;
+    text-align: center;
 }
 
 .btn-grid {
@@ -54,11 +70,14 @@ body {
     opacity: 0.5;
 }
 
+
 .controls {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+
 
 .hide {
     display: none;

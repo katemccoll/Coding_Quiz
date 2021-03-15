@@ -13,25 +13,44 @@ startButton.addEventListener('click', startGame);
 
 
 
+var timeLeft = 75;
 
-function countdown() {
-    var timeLeft = 75;
-    var timeInterval = setInterval(function () {
-        if (timeLeft > 5) {
-            timerEl.textContent = "Time: " + timeLeft;
-            timeLeft--;
-        } else if (timeLeft < 5) {
-            timerEl.textContent = "Time: " + timeLeft;
-            timeLeft--;
-            // Change it to Red
-        } else {
-            timerEl.textContent = " ";
-            clearInterval(timeInterval);
-            displayMessage();
+// function countdown() {
+//     var timeLeft = 75;
+//     var timeInterval = setInterval(function () {
+//         if (timeLeft > 5) {
+//             timerEl.textContent = "Time: " + timeLeft;
+//             timeLeft--;
+//         } else if (timeLeft < 5) {
+//             timerEl.textContent = "Time: " + timeLeft;
+//             timeLeft--;
+//             // Change it to Red
+//         } else {
+//             timerEl.textContent = " ";
+//             clearInterval(timeInterval);
+//             displayMessage();
 
+//         }
+//     }, 1000);
+// }
+
+function setTime() {
+    var timerInterval = setInterval(function () {
+        timeLeft--;
+        timerEl.textContent = "Time: " + timeLeft;
+        if (timeLeft === 0) {
+            clearInterval(timerInterval);
         }
-    }, 1000);
+    }, 1000)
 }
+
+setTime();
+
+// function countDown() {
+//     clearInterval(this.countDown);
+//     this.countDown = setInterval(this.decrement, 1000);
+//     question.counter = 75;
+// }
 
 
 
@@ -78,6 +97,9 @@ function showQuestion(question) {
 function selectAnswer() {
 
 }
+
+
+
 
 var question = [
     {
