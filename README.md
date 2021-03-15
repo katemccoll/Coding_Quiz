@@ -75,7 +75,7 @@ HTML:
 
 
 The timer: A timer that counts down from 75
-- Top right-hand corner. Not in header but in body. Or in header but with a very large padding or margin.
+- Top right-hand corner. 
 - homepage set time as 0
 - starts on first question
 - the score is the time you have left.
