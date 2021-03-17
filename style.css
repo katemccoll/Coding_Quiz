@@ -11,6 +11,18 @@
 }
 
 
+body {
+    background-color: var(--white);
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
 header {
     display: inline;
     justify-content: space-around;
@@ -19,35 +31,44 @@ header {
     width: 100%;
 }
 
+button {
+    background-color: var(--purple);
+    color: var(--white);
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    font-size: 20px;
+}
+
+.btn:hover {
+    opacity: 0.5;
+    border: none;
+}
+
 .highScore {
     color: var(--purple);
     text-align: left;
     float: left;
 }
 
-#countdown {
+.timer-count {
     text-align: right;
     float: right;
 }
 
-body {
-    background-color: var(--white);
-    padding: 10px;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 40vh;
-    line-height: 1.5;
-    font-size: 1rem;
-    justify-content: center;
-    align-items: center;
-}
 
+.info,
 .container {
     width: 500px;
-    max-width: 50%;
     text-align: center;
+}
+.info .title {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    padding: 10px
 }
 
 .btn-grid {
@@ -58,27 +79,15 @@ body {
 
 }
 
-.btn {
-    background-color: var(--purple);
-    color: var(--white);
-    border-radius: 5px;
-    border: 1px solid var(--purple);
-    padding: 5px 10px;
-}
-
-.btn:hover {
-    opacity: 0.5;
-}
-
-
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 
 
 .hide {
     display: none;
+}
+
+#question {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

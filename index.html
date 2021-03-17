@@ -12,36 +12,29 @@
 
 <body>
     <header>
+        <!-- Do i need to make a different page or a button? -->
         <h2 class="highScore">View Score</h2>
-        <h2 id="countdown">Time: 75</h2>
+        <h2 class="timer-count">Time: 0</h2>
     </header>
+    <section id="info" class="info">
+        <h1 class="title">Coding Quiz Challenge</h1>
+        <p class="content"> Try to answer the following code-related questions within the time limit.
+            Keep in mind that incorrect answers will penalise your score/time by ten seconds!</p>
 
-    <div class="container"></div>
-    <div id="content-container">
-        <main class="content">
-            <h1 class="content title">Coding Quiz Challenge</h1>
-            <p class="content text">
-                Try to answer the following code-related questions within the time limit.
-                Keep in mind that incorrect answers will penalise your score/time by ten seconds!
-            </p>
-        </main>
-    </div>
+    </section>
+    <button id="start-btn">Start Quiz</button>
 
-    <div id="question-container" class="hide">
-        <div id="question">Question</div>
-        <div id="answer-btn" class="btn-grid">
-            <button class="btn">Answer 1</button>
-            <button class="btn">Answer 2</button>
-            <button class="btn">Answer 3</button>
-            <button class="btn">Answer 4</button>
-        </div>
-    </div>
+    <section id="container" class="container hide">
+        <h2 id="question">Question</h2>
+        <ul id="answer-section" class="btn-grid">
+            <button>Answer 1</button>
+            <button>Answer 2</button>
+            <button>Answer 3</button>
+            <button>Answer 4</button>
+        </ul>
+    </section>
 
-    <div class="controls">
-        <button id="start-btn" class="start-btn btn">Start Quiz</button>
-        <button id="next-btn" class="next-btn btn hide">Next</button>
 
-    </div>
 
     </div>
 

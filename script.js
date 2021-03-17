@@ -1,127 +1,174 @@
 // Timer
-var timerEl = document.getElementById('countdown');
-
-var startButton = document.getElementById('start-btn');
-// var nextButton = document.getElementById('next-btn');
-var questionContainerElement = document.getElementById("question-container");
+var timerElement = document.querySelector(".timer-count");
+var startButton = document.getElementById("start-btn");
+// var nextButton = document.querySelector("next-btn");
+var infoElement = document.getElementById("info");
+var containerElement = document.getElementById("container");
 var questionElement = document.getElementById("question");
-var answerButtonsElement = document.getElementById("answer-buttons")
+var answerSectionElement = document.getElementById("answer-section");
+var win = document.querySelector(".win");
+var lose = document.querySelector(".lose");
+var userScoreElement
+
+
+var winCounter = 0;
+var loseCounter = 0;
+var isWin = false;
+var timer;
+var timerCount;
+
 
 let shuffledQuestions, currentQuestionIndex;
 
+
+
 startButton.addEventListener('click', startGame);
 
-
-
-var timeLeft = 75;
-
-// function countdown() {
-//     var timeLeft = 75;
-//     var timeInterval = setInterval(function () {
-//         if (timeLeft > 5) {
-//             timerEl.textContent = "Time: " + timeLeft;
-//             timeLeft--;
-//         } else if (timeLeft < 5) {
-//             timerEl.textContent = "Time: " + timeLeft;
-//             timeLeft--;
-//             // Change it to Red
-//         } else {
-//             timerEl.textContent = " ";
-//             clearInterval(timeInterval);
-//             displayMessage();
-
-//         }
-//     }, 1000);
-// }
-
 function setTime() {
-    var timerInterval = setInterval(function () {
-        timeLeft--;
-        timerEl.textContent = "Time: " + timeLeft;
-        if (timeLeft === 0) {
-            clearInterval(timerInterval);
+    timer = setInterval(function () {
+        timerCount--;
+        timerElement.textContent = timerCount;
+        if (timerCount >= 0) {
+            if (isWin && timerCount > 0) {
+                clearInterval(timer);
+                winGame();
+                setTime(displayScore)
+            }
+
         }
-    }, 1000)
+        if (timerCount === 0) {
+            clearInterval(timer);
+            loseGame();
+        }
+
+    }, 1000);
 }
-
-setTime();
-
-// function countDown() {
-//     clearInterval(this.countDown);
-//     this.countDown = setInterval(this.decrement, 1000);
-//     question.counter = 75;
-// }
-
 
 
 function startGame() {
     console.log("Start");
     startButton.classList.add("hide");
-    shuffledQuestion = question.sort(() => Math.random() - .5);
-    currentQuestionIndex = 0
-    questionContainerElement.classList.remove("hide");
+    infoElement.classList.add("hide");
+    shuffledQuestion = quiz.sort(() => Math.random() - .5);
+    currentQuestionIndex = 0;
+    containerElement.classList.remove("hide");
     setNextQuestion();
+    timerCount = 75;
+    isWin = false;
+    setTime();
 }
 
+function winGame() {
+    winCounter++;
+    setWins()
+}
+
+function loseGame() {
+    loseCounter++;
+    setLosses()
+}
+
+
+function setWins() {
+    win.textContent = winCounter;
+    localStorage.setItem("winCount", winCounter);
+}
+
+function setLosses() {
+    localStorage.textContent = loseCounter;
+    localStorage.setItem("loseCount", loseCounter);
+}
+
+
+function getWins() {
+    var storedWins = localStorage.getItem("winCount");
+    if (storedWins === null) {
+        winCounter = 0;
+    } else {
+        winCounter = storedWins;
+    }
+
+    win.textContent = winCounter;
+}
+
+function getLosses() {
+    var storedLosses = localStorage.getItem("loseCount");
+    if (storedLosses === null) {
+        loseCounter = 0;
+    } else {
+        loseCounter = storedLosses;
+    }
+    lose.textContent = loseCounter;
+}
 // var shuffleQuestion = "";
 // for (var i = 0; i < question; i++) {
 //     var shuffleIndex = Math.floor(Math.random() )
 // }
 
 function setNextQuestion() {
-    // resetState();
+    resetState();
     showQuestion(shuffledQuestion[currentQuestionIndex]);
 }
 
-function showQuestion(question) {
-    questionElement.innerText = question.question;
-    question.answer.forEach(answer => {
+function showQuestion(multiChoiceQuestion) {
+    questionElement.innerText = multiChoiceQuestion.question;
+    multiChoiceQuestion.choices.forEach(choice => {
         var button = document.createElement("button");
-        button.innerText = answer.text;
-        button.classList.add("btn");
-        if (answer.correct) {
-            button.dataset.correct = answer.correct;
+        button.innerText = choice;
+        if (choice === multiChoiceQuestion.answer) {
+            button.addEventListener("click", correctAnswer);
+        } else {
+            button.addEventListener("click", wrongAnswer);
+
         }
-        button.addEventListener("click", selectAnswer);
-        // answerButtonsElement.appendChild(button)
+        answerSectionElement.appendChild(button);
     });
 }
 
-// function resetState() {
-//     nextButton.classList.add("hide");
-//     while (answerButtonsElement.firstChild) {
-//         answerButtonsElement.removeChild(answerButtonsElement.firstChild);
-//     }
-// }
+function displayScore() {
 
-function selectAnswer() {
+}
+
+function resetState() {
+    // nextButton.classList.add("hide");
+    while (answerSectionElement.firstChild) {
+        answerSectionElement.removeChild(answerSectionElement.firstChild);
+    }
+}
+
+function correctAnswer() {
+    console.log("correct");
+
+}
+
+function wrongAnswer() {
+    console.log("wrong");
+
 
 }
 
 
-
-
-var question = [
+var quiz = [
     {
         "question": "Commonly used data types DO NOT include:",
-        "answer": ["1. Strings", "2. Booleans", "3. Alerts", "4. Numbers"],
-        "correct": "3. Alerts"
+        "choices": ["1. Strings", "2. Booleans", "3. Alerts", "4. Numbers"],
+        "answer": "3. Alerts"
     }, {
         "question": "The condition is an if / else statement is enclosed within _____.",
-        "answer": ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
-        "correct": "2. curly brackets"
+        "choices": ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
+        "answer": "2. curly brackets"
     }, {
         "question": "Arrays in JavaScript can be used to store _____.",
-        "answer": ["1. number and strings", "2. other arrays", "3. booleans", "4. all the above"],
-        "correct": "4. all the above"
+        "choices": ["1. number and strings", "2. other arrays", "3. booleans", "4. all the above"],
+        "answer": "4. all the above"
     }, {
         "question": "String values must be enclosed withing _____ when being assigned to variables.",
-        "answer": ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"],
-        "correct": "3. quotes"
+        "choices": ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"],
+        "answer": "3. quotes"
     }, {
         "question": "A very useful tool used during development and debugging for printing content to the debugger is:",
-        "answer": ["1. JavaScript", "2. Terminal / Bash", "3. for loops", "4. console.log"],
-        "correct": "4. console.log"
+        "choices": ["1. JavaScript", "2. Terminal / Bash", "3. for loops", "4. console.log"],
+        "answer": "4. console.log"
     }
 ]
 
