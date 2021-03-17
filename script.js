@@ -1,4 +1,3 @@
-// Timer
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.getElementById("start-btn");
 // var nextButton = document.querySelector("next-btn");
@@ -56,16 +55,6 @@ function startGame() {
     timerCount = 75;
     isWin = false;
     setTime();
-}
-
-function winGame() {
-    winCounter++;
-    setWins()
-}
-
-function loseGame() {
-    loseCounter++;
-    setLosses()
 }
 
 
@@ -138,11 +127,13 @@ function resetState() {
 
 function correctAnswer() {
     console.log("correct");
-
+    setNextQuestion();
 }
 
 function wrongAnswer() {
     console.log("wrong");
+    timerCount -= 10;
+    setNextQuestion();
 
 
 }
