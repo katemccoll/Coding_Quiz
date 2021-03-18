@@ -1,3 +1,4 @@
+// Declaring 
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.getElementById("start-btn");
 // var nextButton = document.querySelector("next-btn");
@@ -9,7 +10,7 @@ var win = document.querySelector(".win");
 var lose = document.querySelector(".lose");
 var userScoreElement
 
-
+//  A variable declared in global scope is available to all functions
 var winCounter = 0;
 var loseCounter = 0;
 var isWin = false;
@@ -23,18 +24,22 @@ let shuffledQuestions, currentQuestionIndex;
 
 startButton.addEventListener('click', startGame);
 
+// Functions are reuseable blocks of code that perform a specific task.
 function setTime() {
+    // function expression of set interval. Now being set as timer
     timer = setInterval(function () {
         timerCount--;
-        timerElement.textContent = timerCount;
+        timerElement.textContent = timerCount; 
         if (timerCount >= 0) {
             if (isWin && timerCount > 0) {
+                // Functions being called to execute
                 clearInterval(timer);
                 winGame();
                 setTime(displayScore)
             }
 
         }
+        // if timerCount gets to 0, it will clear the timer and call function 'loseGame'
         if (timerCount === 0) {
             clearInterval(timer);
             loseGame();
@@ -43,33 +48,40 @@ function setTime() {
     }, 1000);
 }
 
-
+// Declaring function Start Game, will execute when called.
 function startGame() {
+    // When function is called, it will print Start
     console.log("Start");
+    // Adding hide class fto below variables
     startButton.classList.add("hide");
     infoElement.classList.add("hide");
     shuffledQuestion = quiz.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     containerElement.classList.remove("hide");
+    // function being called to execute
     setNextQuestion();
     timerCount = 75;
     isWin = false;
+
     setTime();
 }
 
-
+//  declaring function setWins
 function setWins() {
     win.textContent = winCounter;
     localStorage.setItem("winCount", winCounter);
 }
-
+//  Declaring function setLosses
 function setLosses() {
     localStorage.textContent = loseCounter;
+    // sets the value of loseCount in local storage
     localStorage.setItem("loseCount", loseCounter);
 }
 
-
+//  getWins using declaration
 function getWins() {
+    // a variable declared in local scope is only available to that function
+    //  getItem - get the value of winCount from local storage
     var storedWins = localStorage.getItem("winCount");
     if (storedWins === null) {
         winCounter = 0;
@@ -80,6 +92,7 @@ function getWins() {
     win.textContent = winCounter;
 }
 
+//  getLosses using function declaration
 function getLosses() {
     var storedLosses = localStorage.getItem("loseCount");
     if (storedLosses === null) {
@@ -96,20 +109,28 @@ function getLosses() {
 
 function setNextQuestion() {
     resetState();
+    //  being called with parameter of shuffled questions from list of questions left
     showQuestion(shuffledQuestion[currentQuestionIndex]);
 }
 
+//  FUnctions can take parameters- this one is multiChoiceQuestion
 function showQuestion(multiChoiceQuestion) {
     questionElement.innerText = multiChoiceQuestion.question;
+    //  calls function for each array element
     multiChoiceQuestion.choices.forEach(choice => {
+        // creates a button element
         var button = document.createElement("button");
         button.innerText = choice;
+        // Depending on which answer the user chooses, if they choose correctly, it will call correct answer. Else it will call wrong answer.
         if (choice === multiChoiceQuestion.answer) {
+            // Attaches event handler to the document
             button.addEventListener("click", correctAnswer);
         } else {
+            // adding click event
             button.addEventListener("click", wrongAnswer);
 
         }
+        //  appends the button to answerSectionElement
         answerSectionElement.appendChild(button);
     });
 }
@@ -121,24 +142,28 @@ function displayScore() {
 function resetState() {
     // nextButton.classList.add("hide");
     while (answerSectionElement.firstChild) {
+        //  removes the firstChild from list
         answerSectionElement.removeChild(answerSectionElement.firstChild);
     }
 }
 
 function correctAnswer() {
+    // logs correct
     console.log("correct");
+    //  calls function
     setNextQuestion();
 }
 
 function wrongAnswer() {
     console.log("wrong");
+    //  minus 10 seconds from timerCount
     timerCount -= 10;
     setNextQuestion();
 
 
 }
 
-
+//  global scope
 var quiz = [
     {
         "question": "Commonly used data types DO NOT include:",

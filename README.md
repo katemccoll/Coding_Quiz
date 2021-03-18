@@ -51,8 +51,6 @@ Lets break down each section
 
 ![Question on](Assets\Mock-Up\Questions_2.JPG)
 
-![Question on](Assets\Mock-Up\Questions_1.JPG)
-
 ![Question on](Assets\Mock-Up\Questions_4.JPG)
 
 ![Question on](Assets\Mock-Up\Questions_5.JPG)
@@ -89,8 +87,16 @@ Highscores: Score is the time you have left.
 - You have two selections
     - go back to main page
     - clear highscores
+- highscores to have link to highscore page
 
 
+
+
+How to tackle this:
+
+Starting page - start button
+Set up question and answer button areas.
+get question and answers to appear 
 
 
 
