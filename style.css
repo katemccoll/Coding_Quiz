@@ -8,6 +8,8 @@
     --purple: #362655;
     --light-purple: #f0e7f8;
     --white: #ffffff;
+    --grey: #808080;
+
 }
 
 
@@ -90,4 +92,11 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+#correct,
+#wrong {
+    color: var(--grey);
+    
+
 }

@@ -9,6 +9,9 @@ var answerSectionElement = document.getElementById("answer-section");
 var win = document.querySelector(".win");
 var lose = document.querySelector(".lose");
 var userScoreElement
+var correctElement = document.getElementById("correct");
+var wrongElement = document.getElementById("wrong");
+var submitScoreElement = document.getElementsByClassName("submit-score")
 
 //  A variable declared in global scope is available to all functions
 var winCounter = 0;
@@ -18,7 +21,7 @@ var timer;
 var timerCount;
 
 
-let shuffledQuestions, currentQuestionIndex;
+let shuffledQuestion, currentQuestionIndex;
 
 
 
@@ -29,7 +32,7 @@ function setTime() {
     // function expression of set interval. Now being set as timer
     timer = setInterval(function () {
         timerCount--;
-        timerElement.textContent = timerCount; 
+        timerElement.textContent = timerCount;
         if (timerCount >= 0) {
             if (isWin && timerCount > 0) {
                 // Functions being called to execute
@@ -52,7 +55,7 @@ function setTime() {
 function startGame() {
     // When function is called, it will print Start
     console.log("Start");
-    // Adding hide class fto below variables
+    // Adding hide class to below variables
     startButton.classList.add("hide");
     infoElement.classList.add("hide");
     shuffledQuestion = quiz.sort(() => Math.random() - .5);
@@ -62,8 +65,13 @@ function startGame() {
     setNextQuestion();
     timerCount = 75;
     isWin = false;
-
+    // calling setTime function
     setTime();
+}
+
+function stopGame() {
+    containerElement.classList.add("hide");
+    clearInterval(timer);
 }
 
 //  declaring function setWins
@@ -108,12 +116,23 @@ function getLosses() {
 // }
 
 function setNextQuestion() {
+
     resetState();
+    if (currentQuestionIndex === shuffledQuestion.length) {
+        console.log("stopGame");
+        stopGame();
+        return;
+    }
     //  being called with parameter of shuffled questions from list of questions left
     showQuestion(shuffledQuestion[currentQuestionIndex]);
+    //  need to make it choose from questions left over
+    currentQuestionIndex++;
+    // no more = stopgame
+    // use shuffledQuestion and currentQuestionIndex to determine when the game is done.
+
 }
 
-//  FUnctions can take parameters- this one is multiChoiceQuestion
+//  Functions can take parameters- this one is multiChoiceQuestion
 function showQuestion(multiChoiceQuestion) {
     questionElement.innerText = multiChoiceQuestion.question;
     //  calls function for each array element
@@ -147,17 +166,27 @@ function resetState() {
     }
 }
 
+
 function correctAnswer() {
     // logs correct
     console.log("correct");
     //  calls function
+    correctElement.classList.remove("hide");
+    setTimeout(function () {
+        correctElement.classList.add("hide");
+    }, 2000);
     setNextQuestion();
+
 }
 
 function wrongAnswer() {
     console.log("wrong");
     //  minus 10 seconds from timerCount
     timerCount -= 10;
+    wrongElement.classList.remove("hide");
+    setTimeout(function () {
+        wrongElement.classList.add("hide");
+    }, 500);
     setNextQuestion();
 
 
@@ -188,18 +217,3 @@ var quiz = [
     }
 ]
 
-
-
-// function shuffle(array) {
-//     var temporaryValue, randomIndex;
-//     var currentIndex = array.length;
-//     while (currentIndex > 1) {
-//         randomIndex - Math.floor(Math.random() * currentIndex);
-//         currentIndex -= 1;
-
-//         temporaryValue = array[currentIndex];
-//         array[currentIndex] = array[randomIndex];
-//         array[randomIndex] = temporaryValue;
-//     }
-//     return array;
-// }
