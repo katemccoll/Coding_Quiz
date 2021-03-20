@@ -39,8 +39,10 @@ button {
     border-radius: 5px;
     border: none;
     outline: none;
-    padding: 10px 15px;
-    font-size: 20px;
+    padding: 5px 10px;
+    font-size: 16px;
+    height: fit-content;
+    align-self: center;
 }
 
 
@@ -105,6 +107,24 @@ button {
 #initials {
     box-sizing: border-box;
     margin: 8px 20px;
-    padding: 12px 20px;
+    padding: 5px;
     width: 50%;
+}
+
+form {
+    display: flex;
+    /* flex-flow: row wrap; */
+}
+
+label {
+    align-self: center;
+}
+
+section {
+    width: 40%;
+}
+
+ol {
+    background-color: var(--light-purple);
+    color: var(--purple);
 }

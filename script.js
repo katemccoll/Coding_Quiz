@@ -10,10 +10,14 @@ var lose = document.querySelector(".lose");
 var correctElement = document.getElementById("correct");
 var wrongElement = document.getElementById("wrong");
 var submitInitialsElement = document.getElementById("submit-initials");
-var submitElement = document.querySelector("#submit");
+var submitButton = document.querySelector("#submit-btn");
 var initialsInput = document.querySelector("#initials");
 var highscoresElement = document.getElementById("highscores");
-var finalScoreElement = document.getElementById("final-score")
+var newScoreElement = document.querySelector("#new-score");
+var initialsScoreElement = document.querySelector("#initials-score");
+var highscoresList = document.querySelector("#highscores-list");
+var userScoreForm = document.querySelector("#user-score-form");
+var clearButton = document.getElementById("clear-btn");
 
 //  A variable declared in global scope is available to all functions
 var winCounter = 0;
@@ -21,7 +25,7 @@ var loseCounter = 0;
 var isWin = false;
 var timer;
 var timerCount;
-
+var userScores = [];
 
 let shuffledQuestion, currentQuestionIndex;
 
@@ -80,42 +84,46 @@ function stopGame() {
     submitInitials();
 }
 
+
+// renders items in a highscore list as <li> elements
+function renderList() {
+    //  clears list and updates 
+    highscoresList.innerHTML = "";
+    winCounter.textContent = userScores.length;
+    // render a new li for each userScore
+    for (var i = 0; i < userScores.length; i++) {
+        var userScore = userScores[i];
+        var li = document.createElement("li");
+        li.textContent = userScore;
+        li.setAttribute("data-index", i);
+        highscoresList.appendChild(li)
+    }
+
+}
+
+
 //  declaring function setWins
 function setWins() {
     win.textContent = winCounter;
     localStorage.setItem("winCount", winCounter);
 }
-//  Declaring function setLosses
-function setLosses() {
-    localStorage.textContent = loseCounter;
-    // sets the value of loseCount in local storage
-    localStorage.setItem("loseCount", loseCounter);
-}
 
-//  getWins using declaration
-function getWins() {
-    // a variable declared in local scope is only available to that function
-    //  getItem - get the value of winCount from local storage
-    var storedWins = localStorage.getItem("winCount");
-    if (storedWins === null) {
-        winCounter = 0;
-    } else {
-        winCounter = storedWins;
-    }
 
-    win.textContent = winCounter;
-}
+// //  getWins using declaration
+// function getScores() {
+//     // a variable declared in local scope is only available to that function
+//     //  getItem - get the value of winCount from local storage
+//     var storedScores = localStorage.getItem("highscores");
+//     if (storedScores === null) {
+//         winCounter = 0;
+//     } else {
+//         winCounter = storedWins;
+//     }
 
-//  getLosses using function declaration
-function getLosses() {
-    var storedLosses = localStorage.getItem("loseCount");
-    if (storedLosses === null) {
-        loseCounter = 0;
-    } else {
-        loseCounter = storedLosses;
-    }
-    lose.textContent = loseCounter;
-}
+//     win.textContent = winCounter;
+// }
+
+
 
 function setNextQuestion() {
 
@@ -193,16 +201,53 @@ function wrongAnswer() {
 
 function submitInitials() {
     submitInitialsElement.classList.remove("hide");
-    var finalScore = "Your final score is " + timerCount + ".";
-    finalScoreElement.textContent = finalScore;
-    submitElement.addEventListener("click", highscores);
+    newScoreElement.textContent = "Your final score is " + timerCount + ".";
+    submitButton.addEventListener('click', highscores);
+    userScoreForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        //  add submit to form
+        var userScoreText = initialsInput.value.trim();
+        //  return from function early if left blank
+        if (userScoreText === "") {
+            return;
+        }
+        // add new userScoreText to the userScores array, clear the input
+        userScores.push(userScoreText);
+        initialsInput.value = "";
+        // store updated userScores in localStorage, re-render the list
+        storeUserScores();
+        renderList();
+
+    });
 }
+
 
 
 function highscores() {
     submitInitialsElement.classList.add("hide");
-    highscoresElement.classList.remove("hide")
+    highscoresElement.classList.remove("hide");
+    //  get stored userScores form local storage
+    var storedScores = JSON.parse(localStorage.getItem("userScores"));
+    //  if userScores were retrieved from local storage, update the userScores array to it
+    if (storedScores !== null) {
+        userScores = storedScores;
+    }
+    // this is a helper function that will render the list to the DOM
+    renderList();
+
+
 }
+
+function storeUserScores() {
+    // stringify and set key in localStorage to userScores array
+    localStorage.setItem("userScores", JSON.stringify(userScores));
+}
+
+
+
+
+
+
 
 //  global scope
 var quiz = [
