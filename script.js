@@ -33,6 +33,8 @@ let shuffledQuestion, currentQuestionIndex;
 
 startButton.addEventListener('click', startGame);
 
+highscoresElement.addEventListener('click', highscores);
+
 function updateTimer(change) {
     timerCount -= change;
     timerElement.textContent = timerCount;
@@ -40,7 +42,6 @@ function updateTimer(change) {
         if (isWin && timerCount > 0) {
             // Functions being called to execute
             clearInterval(timer);
-            winGame();
         }
 
     }
@@ -55,6 +56,7 @@ function updateTimer(change) {
 function setTime() {
     // function expression of set interval. Now being set as timer
     timer = setInterval(function () {
+
         updateTimer(1);
 
     }, 1000);
@@ -98,8 +100,6 @@ function renderList() {
         li.setAttribute("data-index", i);
         highscoresList.appendChild(li)
     }
-
-
 }
 
 function setNextQuestion() {
@@ -201,6 +201,9 @@ function submitInitials() {
 
 
 function highscores() {
+    infoElement.classList.add("hide");
+    startButton.classList.add("hide");
+    containerElement.classList.add("hide");
     submitInitialsElement.classList.add("hide");
     highscoresElement.classList.remove("hide");
     //  get stored userScores form local storage
@@ -211,12 +214,6 @@ function highscores() {
     }
     // this is a helper function that will render the list to the DOM
     renderList();
-    // clearButton.addEventListener('click', function (event) {
-    //     var element = event.target;
-
-    // })
-
-
 }
 
 function storeUserScores() {
@@ -229,6 +226,13 @@ function clearList() {
     localStorage.clear();
     renderList();
 }
+
+
+function loseGame() {
+    containerElement.classList.add("hide");
+    highscores();
+}
+
 
 
 

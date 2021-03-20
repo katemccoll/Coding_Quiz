@@ -26,8 +26,8 @@ body {
 }
 
 header {
-    display: inline;
-    justify-content: space-around;
+    display: inline-flex;
+    justify-content: space-between;
     padding: 10px;
     padding-top: 2px;
     width: 100%;
@@ -52,10 +52,11 @@ button {
     border: none;
 }
 
-.highScore {
+.highscores {
     color: var(--purple);
     text-align: left;
     float: left;
+    cursor: context-menu;
 }
 
 .timer-count {
@@ -64,17 +65,25 @@ button {
 }
 
 
-.info,
-.container {
-    width: 500px;
+.info {
+    width: 30%;
     text-align: center;
 }
+
 .info .title {
-    display: flex;
     align-items: center;
-    height: 60px;
-    width: 100%;
-    padding: 10px
+    padding: 10px;
+    font-size: 36px;
+    margin-bottom: auto;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.container {
+    width: 24%;
+    text-align: center;
 }
 
 .btn-grid {
@@ -95,10 +104,7 @@ ul {
 }
 
 #question {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    text-align: left;
 }
 
 #correct,
