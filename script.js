@@ -99,31 +99,8 @@ function renderList() {
         highscoresList.appendChild(li)
     }
 
+
 }
-
-
-//  declaring function setWins
-function setWins() {
-    win.textContent = winCounter;
-    localStorage.setItem("winCount", winCounter);
-}
-
-
-// //  getWins using declaration
-// function getScores() {
-//     // a variable declared in local scope is only available to that function
-//     //  getItem - get the value of winCount from local storage
-//     var storedScores = localStorage.getItem("highscores");
-//     if (storedScores === null) {
-//         winCounter = 0;
-//     } else {
-//         winCounter = storedWins;
-//     }
-
-//     win.textContent = winCounter;
-// }
-
-
 
 function setNextQuestion() {
 
@@ -212,7 +189,7 @@ function submitInitials() {
             return;
         }
         // add new userScoreText to the userScores array, clear the input
-        userScores.push(userScoreText);
+        userScores.push(userScoreText + " - " + timerCount);
         initialsInput.value = "";
         // store updated userScores in localStorage, re-render the list
         storeUserScores();
@@ -234,6 +211,10 @@ function highscores() {
     }
     // this is a helper function that will render the list to the DOM
     renderList();
+    // clearButton.addEventListener('click', function (event) {
+    //     var element = event.target;
+
+    // })
 
 
 }
@@ -243,9 +224,11 @@ function storeUserScores() {
     localStorage.setItem("userScores", JSON.stringify(userScores));
 }
 
-
-
-
+function clearList() {
+    userScores = [];
+    localStorage.clear();
+    renderList();
+}
 
 
 

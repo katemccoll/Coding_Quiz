@@ -8,7 +8,7 @@
     --purple: #362655;
     --light-purple: #f0e7f8;
     --white: #ffffff;
-    --grey: #808080;
+    --grey: #a1a1a1;
 
 }
 
@@ -43,6 +43,7 @@ button {
     font-size: 16px;
     height: fit-content;
     align-self: center;
+    width: fit-content;
 }
 
 
@@ -84,6 +85,9 @@ button {
 
 }
 
+ul {
+    padding-left: 0%;
+}
 
 
 .hide {
@@ -100,8 +104,8 @@ button {
 #correct,
 #wrong {
     color: var(--grey);
-
-
+    text-align: start;
+    border-top: 2px solid var(--grey);
 }
 
 #initials {
