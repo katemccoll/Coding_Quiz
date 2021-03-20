@@ -43,6 +43,7 @@ button {
     font-size: 20px;
 }
 
+
 .btn:hover {
     opacity: 0.5;
     border: none;
@@ -97,6 +98,13 @@ button {
 #correct,
 #wrong {
     color: var(--grey);
-    
 
+
+}
+
+#initials {
+    box-sizing: border-box;
+    margin: 8px 20px;
+    padding: 12px 20px;
+    width: 50%;
 }

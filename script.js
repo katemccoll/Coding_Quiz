@@ -1,17 +1,19 @@
 // Declaring 
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.getElementById("start-btn");
-// var nextButton = document.querySelector("next-btn");
 var infoElement = document.getElementById("info");
 var containerElement = document.getElementById("container");
 var questionElement = document.getElementById("question");
 var answerSectionElement = document.getElementById("answer-section");
 var win = document.querySelector(".win");
 var lose = document.querySelector(".lose");
-var userScoreElement
 var correctElement = document.getElementById("correct");
 var wrongElement = document.getElementById("wrong");
-var submitScoreElement = document.getElementsByClassName("submit-score")
+var submitInitialsElement = document.getElementById("submit-initials");
+var submitElement = document.querySelector("#submit");
+var initialsInput = document.querySelector("#initials");
+var highscoresElement = document.getElementById("highscores");
+var finalScoreElement = document.getElementById("final-score")
 
 //  A variable declared in global scope is available to all functions
 var winCounter = 0;
@@ -27,26 +29,29 @@ let shuffledQuestion, currentQuestionIndex;
 
 startButton.addEventListener('click', startGame);
 
+function updateTimer(change) {
+    timerCount -= change;
+    timerElement.textContent = timerCount;
+    if (timerCount >= 0) {
+        if (isWin && timerCount > 0) {
+            // Functions being called to execute
+            clearInterval(timer);
+            winGame();
+        }
+
+    }
+    // if timerCount gets to 0, it will clear the timer and call function 'loseGame'
+    if (timerCount <= 0) {
+        clearInterval(timer);
+        loseGame();
+    }
+}
+
 // Functions are reuseable blocks of code that perform a specific task.
 function setTime() {
     // function expression of set interval. Now being set as timer
     timer = setInterval(function () {
-        timerCount--;
-        timerElement.textContent = timerCount;
-        if (timerCount >= 0) {
-            if (isWin && timerCount > 0) {
-                // Functions being called to execute
-                clearInterval(timer);
-                winGame();
-                setTime(displayScore)
-            }
-
-        }
-        // if timerCount gets to 0, it will clear the timer and call function 'loseGame'
-        if (timerCount === 0) {
-            clearInterval(timer);
-            loseGame();
-        }
+        updateTimer(1);
 
     }, 1000);
 }
@@ -72,6 +77,7 @@ function startGame() {
 function stopGame() {
     containerElement.classList.add("hide");
     clearInterval(timer);
+    submitInitials();
 }
 
 //  declaring function setWins
@@ -110,10 +116,6 @@ function getLosses() {
     }
     lose.textContent = loseCounter;
 }
-// var shuffleQuestion = "";
-// for (var i = 0; i < question; i++) {
-//     var shuffleIndex = Math.floor(Math.random() )
-// }
 
 function setNextQuestion() {
 
@@ -154,12 +156,9 @@ function showQuestion(multiChoiceQuestion) {
     });
 }
 
-function displayScore() {
 
-}
 
 function resetState() {
-    // nextButton.classList.add("hide");
     while (answerSectionElement.firstChild) {
         //  removes the firstChild from list
         answerSectionElement.removeChild(answerSectionElement.firstChild);
@@ -181,15 +180,28 @@ function correctAnswer() {
 
 function wrongAnswer() {
     console.log("wrong");
+    updateTimer(10);
+
     //  minus 10 seconds from timerCount
-    timerCount -= 10;
     wrongElement.classList.remove("hide");
     setTimeout(function () {
         wrongElement.classList.add("hide");
     }, 500);
     setNextQuestion();
+}
 
 
+function submitInitials() {
+    submitInitialsElement.classList.remove("hide");
+    var finalScore = "Your final score is " + timerCount + ".";
+    finalScoreElement.textContent = finalScore;
+    submitElement.addEventListener("click", highscores);
+}
+
+
+function highscores() {
+    submitInitialsElement.classList.add("hide");
+    highscoresElement.classList.remove("hide")
 }
 
 //  global scope

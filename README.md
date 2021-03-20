@@ -83,7 +83,7 @@ Highscores: Score is the time you have left.
 - view highscore is there through out the questions
 - Once the quiz is done, it takes your final score and you enter your initials
 - Highscore page comes up with a list of highscores
-- Format is 1. AB - ##
+- Format is #. AB - timeLeft
 - You have two selections
     - go back to main page
     - clear highscores
@@ -97,6 +97,7 @@ How to tackle this:
 Starting page - start button
 Set up question and answer button areas.
 get question and answers to appear 
+Once answered question, then reappear with new one
 
 
 
