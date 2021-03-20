@@ -183,7 +183,7 @@ function submitInitials() {
     userScoreForm.addEventListener("submit", function (event) {
         event.preventDefault();
         //  add submit to form
-        var userScoreText = initialsInput.value.trim();
+        var userScoreText = initialsInput.value.trim().toUpperCase();
         //  return from function early if left blank
         if (userScoreText === "") {
             return;
@@ -191,6 +191,7 @@ function submitInitials() {
         // add new userScoreText to the userScores array, clear the input
         userScores.push(userScoreText + " - " + timerCount);
         initialsInput.value = "";
+
         // store updated userScores in localStorage, re-render the list
         storeUserScores();
         renderList();
