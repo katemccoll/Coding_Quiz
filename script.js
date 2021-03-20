@@ -86,6 +86,17 @@ function stopGame() {
     submitInitials();
 }
 
+function highscoresList() {
+    //  set a length
+    //  if score is lower then not display
+    // if score is in top ten, knock last one out.
+    highscoresList.sort((a, b) => b.highscoresList - a.highscoresList);
+    for (let i = 0; i < 2; i++) {
+        console.log(highscoresList[i]);
+    }
+
+}
+
 
 // renders items in a highscore list as <li> elements
 function renderList() {
@@ -98,9 +109,11 @@ function renderList() {
         var li = document.createElement("li");
         li.textContent = userScore;
         li.setAttribute("data-index", i);
-        highscoresList.appendChild(li)
+        highscoresList.appendChild(li);
     }
 }
+
+
 
 function setNextQuestion() {
 
