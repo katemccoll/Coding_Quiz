@@ -87,16 +87,6 @@ function stopGame() {
     submitInitials();
 }
 
-function highscoresList() {
-    //  set a length
-    //  if score is lower then not display
-    // if score is in top ten, knock last one out.
-    highscoresList.sort((a, b) => b.highscoresList - a.highscoresList);
-    for (let i = 0; i < 2; i++) {
-        console.log(highscoresList[i]);
-    }
-
-}
 
 
 // renders items in a highscore list as <li> elements
@@ -108,7 +98,8 @@ function renderList() {
     for (var i = 0; i < userScores.length; i++) {
         var userScore = userScores[i];
         var li = document.createElement("li");
-        li.textContent = userScore;
+        userScoreText = userScore.initials + " - " + userScore.score;
+        li.textContent = userScoreText;
         li.setAttribute("data-index", i);
         highscoresList.appendChild(li);
     }
@@ -193,7 +184,6 @@ function wrongAnswer() {
 function submitInitials() {
     submitInitialsElement.classList.remove("hide");
     newScoreElement.textContent = "Your final score is " + timerCount + ".";
-    submitButton.addEventListener('click', highscores);
     userScoreForm.addEventListener("submit", function (event) {
         event.preventDefault();
         //  add submit to form
@@ -202,13 +192,30 @@ function submitInitials() {
         if (userScoreText === "") {
             return;
         }
-        // add new userScoreText to the userScores array, clear the input
-        userScores.push(userScoreText + " - " + timerCount);
+        // creating object for our array
+        var scoreObject = {
+            initials: userScoreText,
+            score: timerCount
+        };
+
+        //  comparing score and new score. If the new score is not in the top 10, it will not be added. If it does, then the last one will be knocked off.
+        function addNewScore(scores, newScore) {
+            // adding newScore into scores array
+            scores.push(newScore);
+            // sort list from high to low scores
+            scores.sort(function (a, b) {
+                return b.score - a.score;
+            });
+            // will take off any score that is after ten
+            scores.splice(10);
+        }
+
+        addNewScore(userScores, scoreObject);
+
         initialsInput.value = "";
 
-        // store updated userScores in localStorage, re-render the list
         storeUserScores();
-        renderList();
+        highscores();
 
     });
 }
@@ -260,7 +267,7 @@ var quiz = [
     }, {
         "question": "The condition is an if / else statement is enclosed within _____.",
         "choices": ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
-        "answer": "2. curly brackets"
+        "answer": "3. parenthesis"
     }, {
         "question": "Arrays in JavaScript can be used to store _____.",
         "choices": ["1. number and strings", "2. other arrays", "3. booleans", "4. all the above"],
