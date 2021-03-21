@@ -73,7 +73,7 @@ button {
 .info .title {
     align-items: center;
     padding: 10px;
-    font-size: 36px;
+    /* font-size: 36px; */
     margin-bottom: auto;
 }
 
@@ -137,4 +137,20 @@ section {
 ol {
     background-color: var(--light-purple);
     color: var(--purple);
+}
+
+
+@media screen and (max-width: 770px) {
+    .info,
+    .container,
+    section {
+        width: 80%;
+    }
+
+}
+@media screen and (max-width: 500px) {
+    h1 {
+        font-size: 2rem;
+    }
+
 }
