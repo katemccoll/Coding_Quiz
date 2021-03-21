@@ -75,6 +75,7 @@ function startGame() {
     // function being called to execute
     setNextQuestion();
     timerCount = 75;
+    updateTimer(0);
     isWin = false;
     // calling setTime function
     setTime();
