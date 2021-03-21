@@ -1,65 +1,31 @@
+// Key used for storing high scores in local storage
+let STORAGE_HIGH_SCORE_KEY = "highScores";
+
 // Declaring 
-var timerElement = document.querySelector(".timer-count");
 var startButton = document.getElementById("start-btn");
-var infoElement = document.getElementById("info");
-var containerElement = document.getElementById("container");
-var questionElement = document.getElementById("question");
-var answerSectionElement = document.getElementById("answer-section");
-var win = document.querySelector(".win");
-var lose = document.querySelector(".lose");
-var correctElement = document.getElementById("correct");
-var wrongElement = document.getElementById("wrong");
+var gameInfoElement = document.getElementById("info");
+var questionContainerElement = document.getElementById("container");
 var submitInitialsElement = document.getElementById("submit-initials");
-var submitButton = document.querySelector("#submit-btn");
-var initialsInput = document.querySelector("#initials");
-var highscoresElement = document.getElementById("highscores");
-var newScoreElement = document.querySelector("#new-score");
+var highScoresSectionElement = document.getElementById("highscores");
 var initialsScoreElement = document.querySelector("#initials-score");
-var highscoresList = document.querySelector("#highscores-list");
 var userScoreForm = document.querySelector("#user-score-form");
-var clearButton = document.getElementById("clear-btn");
 
 //  A variable declared in global scope is available to all functions
-var winCounter = 0;
-var loseCounter = 0;
-var isWin = false;
-var timer;
-var timerCount;
-var userScores = [];
+var gameTimer;
+var remainingTimeSeconds;
+let shuffledQuestions, currentQuestionIndex;
 
-let shuffledQuestion, currentQuestionIndex;
+// Update time remaining in game. change is subtracted from current time remaining.
+function updateTimeRemaining(change) {
+    var timeRemainingElement = document.querySelector(".timer-count");
 
+    remainingTimeSeconds -= change;
+    timeRemainingElement.textContent = remainingTimeSeconds;
 
-
-startButton.addEventListener('click', startGame);
-
-highscoresElement.addEventListener('click', highscores);
-
-function updateTimer(change) {
-    timerCount -= change;
-    timerElement.textContent = timerCount;
-    if (timerCount >= 0) {
-        if (isWin && timerCount > 0) {
-            // Functions being called to execute
-            clearInterval(timer);
-        }
-
-    }
     // if timerCount gets to 0, it will clear the timer and call function 'loseGame'
-    if (timerCount <= 0) {
-        clearInterval(timer);
-        loseGame();
+    if (remainingTimeSeconds <= 0) {
+        stopGame(false);
     }
-}
-
-// Functions are reuseable blocks of code that perform a specific task.
-function setTime() {
-    // function expression of set interval. Now being set as timer
-    timer = setInterval(function () {
-
-        updateTimer(1);
-
-    }, 1000);
 }
 
 // Declaring function Start Game, will execute when called.
@@ -68,65 +34,64 @@ function startGame() {
     console.log("Start");
     // Adding hide class to below variables
     startButton.classList.add("hide");
-    infoElement.classList.add("hide");
-    shuffledQuestion = quiz.sort(() => Math.random() - .5);
+    gameInfoElement.classList.add("hide");
+
+    shuffledQuestions = quiz.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
-    containerElement.classList.remove("hide");
-    // function being called to execute
-    setNextQuestion();
-    timerCount = 75;
-    updateTimer(0);
-    isWin = false;
-    // calling setTime function
-    setTime();
+
+    remainingTimeSeconds = 75;
+    updateTimeRemaining(0);
+
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+
+    // Start the game timer.
+    gameTimer = setInterval(function () {
+        updateTimeRemaining(1);
+    }, 1000);
 }
 
-function stopGame() {
-    containerElement.classList.add("hide");
-    clearInterval(timer);
-    submitInitials();
+function stopGame(won) {
+    questionContainerElement.classList.add("hide");
+    clearInterval(gameTimer);
+
+    if (won) {
+        showSubmitInitials();
+    } else {
+        showHighScores();
+    }
 }
 
 
+function renderHighScores(highScoreList) {
+    var highScoreListElement = document.querySelector("#highscores-list");
 
-// renders items in a highscore list as <li> elements
-function renderList() {
     //  clears list and updates 
-    highscoresList.innerHTML = "";
-    winCounter.textContent = userScores.length;
+    highScoreListElement.innerHTML = "";
+
     // render a new li for each userScore
-    for (var i = 0; i < userScores.length; i++) {
-        var userScore = userScores[i];
+    for (var i = 0; i < highScoreList.length; i++) {
+        var highScore = highScoreList[i];
         var li = document.createElement("li");
-        userScoreText = userScore.initials + " - " + userScore.score;
-        li.textContent = userScoreText;
+        li.textContent = highScore.initials + " - " + highScore.score;
         li.setAttribute("data-index", i);
-        highscoresList.appendChild(li);
+        highScoreListElement.appendChild(li);
     }
 }
 
-
-
-function setNextQuestion() {
-
-    resetState();
-    if (currentQuestionIndex === shuffledQuestion.length) {
-        console.log("stopGame");
-        stopGame();
-        return;
-    }
-    //  being called with parameter of shuffled questions from list of questions left
-    showQuestion(shuffledQuestion[currentQuestionIndex]);
-    //  need to make it choose from questions left over
-    currentQuestionIndex++;
-    // no more = stopgame
-    // use shuffledQuestion and currentQuestionIndex to determine when the game is done.
-
-}
-
-//  Functions can take parameters- this one is multiChoiceQuestion
 function showQuestion(multiChoiceQuestion) {
+
+    questionContainerElement.classList.remove("hide");
+
+    // Hide answers.
+    var answerSectionElement = document.getElementById("answer-section");
+    while (answerSectionElement.firstChild) {
+        //  removes the firstChild from list
+        answerSectionElement.removeChild(answerSectionElement.firstChild);
+    }
+
+    var questionElement = document.getElementById("question");
     questionElement.innerText = multiChoiceQuestion.question;
+
     //  calls function for each array element
     multiChoiceQuestion.choices.forEach(choice => {
         // creates a button element
@@ -144,119 +109,111 @@ function showQuestion(multiChoiceQuestion) {
         //  appends the button to answerSectionElement
         answerSectionElement.appendChild(button);
     });
+
 }
 
+function showNextQuestion() {
+    currentQuestionIndex++;
 
-
-function resetState() {
-    while (answerSectionElement.firstChild) {
-        //  removes the firstChild from list
-        answerSectionElement.removeChild(answerSectionElement.firstChild);
+    if (currentQuestionIndex === shuffledQuestions.length) {
+        console.log("stopGame");
+        stopGame(true);
+        return;
     }
-}
 
+    showQuestion(shuffledQuestions[currentQuestionIndex]);
+}
 
 function correctAnswer() {
     // logs correct
     console.log("correct");
     //  calls function
+    var correctElement = document.getElementById("correct");
     correctElement.classList.remove("hide");
     setTimeout(function () {
         correctElement.classList.add("hide");
-    }, 2000);
-    setNextQuestion();
+    }, 500);
+    showNextQuestion();
 
 }
 
 function wrongAnswer() {
     console.log("wrong");
-    updateTimer(10);
+    updateTimeRemaining(10);
 
-    //  minus 10 seconds from timerCount
+    var wrongElement = document.getElementById("wrong");
     wrongElement.classList.remove("hide");
     setTimeout(function () {
         wrongElement.classList.add("hide");
     }, 500);
-    setNextQuestion();
+    showNextQuestion();
 }
 
-
-function submitInitials() {
+function showSubmitInitials() {
     submitInitialsElement.classList.remove("hide");
-    newScoreElement.textContent = "Your final score is " + timerCount + ".";
+
+    var newScoreElement = document.querySelector("#new-score");
+    newScoreElement.textContent = "Your final score is " + remainingTimeSeconds + ".";
+
     userScoreForm.addEventListener("submit", function (event) {
         event.preventDefault();
         //  add submit to form
+        var initialsInput = document.querySelector("#initials");
         var userScoreText = initialsInput.value.trim().toUpperCase();
         //  return from function early if left blank
         if (userScoreText === "") {
             return;
         }
-        // creating object for our array
-        var scoreObject = {
+        addNewHighScore({
             initials: userScoreText,
-            score: timerCount
-        };
-
-        //  comparing score and new score. If the new score is not in the top 10, it will not be added. If it does, then the last one will be knocked off.
-        function addNewScore(scores, newScore) {
-            // adding newScore into scores array
-            scores.push(newScore);
-            // sort list from high to low scores
-            scores.sort(function (a, b) {
-                return b.score - a.score;
-            });
-            // will take off any score that is after ten
-            scores.splice(10);
-        }
-
-        addNewScore(userScores, scoreObject);
-
+            score: remainingTimeSeconds
+        });
         initialsInput.value = "";
-
-        storeUserScores();
-        highscores();
-
+        showHighScores();
     });
 }
 
-
-
-function highscores() {
-    infoElement.classList.add("hide");
-    startButton.classList.add("hide");
-    containerElement.classList.add("hide");
-    submitInitialsElement.classList.add("hide");
-    highscoresElement.classList.remove("hide");
-    //  get stored userScores form local storage
-    var storedScores = JSON.parse(localStorage.getItem("userScores"));
-    //  if userScores were retrieved from local storage, update the userScores array to it
-    if (storedScores !== null) {
-        userScores = storedScores;
+function loadHighScores() {
+    var highScores = JSON.parse(localStorage.getItem(STORAGE_HIGH_SCORE_KEY));
+    if (highScores == null) {
+        highScores = [];
     }
+    return highScores;
+}
+
+function addNewHighScore(newScore) {
+    var highScores = loadHighScores();
+    // adding newScore into scores array
+    highScores.push(newScore);
+    // sort list from high to low scores
+    highScores.sort(function (a, b) {
+        return b.score - a.score;
+    });
+    // will take off any score that is after ten
+    highScores.splice(10);
+    localStorage.setItem(STORAGE_HIGH_SCORE_KEY, JSON.stringify(highScores));
+    return highScores;
+}
+
+function showHighScores() {
+    gameInfoElement.classList.add("hide");
+    startButton.classList.add("hide");
+    questionContainerElement.classList.add("hide");
+    submitInitialsElement.classList.add("hide");
+    highScoresSectionElement.classList.remove("hide");
+
+    var clearButton = document.getElementById("clear-btn");
+    clearButton.addEventListener('click', function () {
+        localStorage.clear();
+        renderHighScores(loadHighScores());
+    });
+
+    //  get stored userScores form local storage
+    var highScores = loadHighScores();
+
     // this is a helper function that will render the list to the DOM
-    renderList();
+    renderHighScores(highScores);
 }
-
-function storeUserScores() {
-    // stringify and set key in localStorage to userScores array
-    localStorage.setItem("userScores", JSON.stringify(userScores));
-}
-
-function clearList() {
-    userScores = [];
-    localStorage.clear();
-    renderList();
-}
-
-
-function loseGame() {
-    containerElement.classList.add("hide");
-    highscores();
-}
-
-
-
 
 //  global scope
 var quiz = [
@@ -283,3 +240,4 @@ var quiz = [
     }
 ]
 
+startButton.addEventListener('click', startGame);
