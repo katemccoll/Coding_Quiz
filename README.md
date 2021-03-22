@@ -214,6 +214,7 @@ Below the scores are two buttons.
 - Go Back: this will take you back to the homepage and you can start the quiz again.
 
 Lastly you will see that in your navbar, there is your timer and 'View Highscores'. If you click 'View Highscores' at any point (at the homepage, during the quiz, all done page), this will take you straight the to highscore page.
-
-
+ 
 This is my Coding Quiz Challenge, I hope you enjoyed it!
+
+Note: I added media queries in my CSS too. So that means if you were to to use it on the Tablet or phone, it would still look correct and not bunched together.
