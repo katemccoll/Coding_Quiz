@@ -41,29 +41,29 @@ Lets break down each section
 
 ### Coding Quiz Home Page
 
-![Homepage of the Coding quiz](./Assets/Mock-Up/Coding_Quiz.JPG)
+<img src="./Assets/Mock-Up/Coding_Quiz.JPG">
 
 ### Questions
 
-![Question on](Assets\Mock-Up\Questions.JPG)
+<img src="Assets\Mock-Up\Questions.JPG">
 
-![Question on](Assets\Mock-Up\Questions_3.JPG)
+<img src="Assets\Mock-Up\Questions_3.JPG">
 
-![Question on](Assets\Mock-Up\Questions_2.JPG)
+<img src="Assets\Mock-Up\Questions_2.JPG">
 
-![Question on](Assets\Mock-Up\Questions_4.JPG)
+<img src="Assets\Mock-Up\Questions_4.JPG">
 
-![Question on](Assets\Mock-Up\Questions_5.JPG)
+<img src="Assets\Mock-Up\Questions_5.JPG">
 
 
 ### Highscore
 
 
-![Once you have finished you add in your initials](Assets\Mock-Up\All_done.JPG)
+<img src="Assets\Mock-Up\All_done.JPG">
 
-![Highscore Leader Board](Assets\Mock-Up\Highscore_page.JPG)
+<img src="Assets\Mock-Up\Highscore_page.JPG">
 
-![Clearing the leader board option](Assets\Mock-Up\Higscore_clear.JPG)
+<img src="Assets\Mock-Up\Higscore_clear.JPG">
 
 
 ## The Breakdown
