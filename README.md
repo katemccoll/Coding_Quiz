@@ -126,6 +126,9 @@ I did this by making an array of my questions, choices and correct answer. I als
 
 I have noticed that my timer is wrong. When I click the start button, it stays on 0 for one second then counts down from 74. I need to fix this bug, but right now I need to carry on and focus on what needs to be done. Small things like this can easily be fixed later.
 
+
+<img src="Assets\Images\Answers not showing.JPG"> 
+
 For the longest time I had the questions showing (random order) but not the answers! Either they would come up with my default (answer 1, answer 2 and so on) or not show at all! So that was great feeling when I fixed that! But the next problem was how does my code know to pick up on the right or wrong answer? Creating function for both correct and wrong answer buttons was the key to this! This way when the user clicked the wrong answer, it would minus ten seconds and moved to the next question.
 Oh! I came back to this a bit later on and added my correct and wrong text to pop up. I added a time for this to stay up as well, 2 seconds.
 
@@ -146,6 +149,9 @@ This I struggled a bit with, trying to figure out the best way to display the sc
 
 ## Highscore page buttons
 There are two buttons here: Go back and Clear highscores. Go back was just making sure it would go back to the start. And clear highscores, had to make sure it cleared the highscores. I also went back and make sure that my view highscores on the nav bar worked too. I just made it into a link so once clicked, it would go back to the highscore page.
+
+<img src="Assets\Images\Alldone adding buttons.JPG"> 
+
 
 ## Make it look pretty
 Here I did the final touches to make sure it resembled the mock-up. So making sure I had the right colours, text to be aligned correctly, buttons the right size and my correct and wrong text to come up with a line above in grey. 
@@ -175,4 +181,39 @@ If I have time in the next few weeks, perhaps I will make this too. Would be a g
 
 # Results
 
+When the page is loaded, you are taken to the homepage. Here you have the title and information on the quiz. 
+Once you click the start button, the timer will start and you have 75 seconds to complete the quiz.
 
+<img src="Assets\Results\HomePage.JPG">
+
+You will then be presented with your first question out of five. They are presented in a random order, showing one at a time. 
+There are four choices for you to choose from. They are presented as buttons, so when you choose what you think is the right answer, click the button.
+
+If you are correct, a message below the answers will pop up saying correct and will move you to the next answer.
+If you are wrong, a message below will pop up saying wrong. Ten seconds will be removed from your time and you will move on to the next question.
+
+This will keep happening until you answer all questions or run out of time.
+
+<img src= "Assets\Results\MultiChoiceQuestion.JPG">
+
+If you answer all questions within the 75 seconds, you will be take you to a new page where it will tell you the score and ask you to enter your initials. The score is the time you have left. The faster you are, the high score you will end up having. When you enter your initials, you only have two letters to fill out. If you try to use more, it won't show. Also if you try to add numbers, a message will pop up it will ask you to match what is requested - Initials. If you try to submit without writing anything, the submit button will not work.
+
+<img src="Assets\Results\Initials.JPG">
+
+Once you have pressed the submit button, it will take you to the Highscores page. Here it will covert your initials to upper Case and display it with the rest of the highscores. 
+
+Note: If you ended up not answering any of the question in the time given, it will take you straight to this page too.
+
+
+As you can see in the image below, the scores have been ordered, highest at the top, lowest at the bottom. I have added a top ten scores which wasn't required but I thought that it might be a good idea. This will encourage students to try be in that top ten. Or if you are quizzing yourself, then you don't end up having to scroll down to see all your scores. Also, no point in that, that doesn't help as you want to focus on your highscores.
+
+<img src="Assets\Results\highscores.JPG">
+
+Below the scores are two buttons. 
+- Clear Highscores: this will clear all of the highscores and you can start again.
+- Go Back: this will take you back to the homepage and you can start the quiz again.
+
+Lastly you will see that in your navbar, there is your timer and 'View Highscores'. If you click 'View Highscores' at any point (at the homepage, during the quiz, all done page), this will take you straight the to highscore page.
+
+
+This is my Coding Quiz Challenge, I hope you enjoyed it!
