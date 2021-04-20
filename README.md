@@ -1,10 +1,10 @@
-# Homework_4_Web_APIs
+# Coding Quiz
 Creating a Code Quiz:
 A timed coding quiz with multiple-choice questions.
 
-## Getting Started Early!
-This week's homework is starting from scratch. Learning from the last 'from scratch' homework, thought it would be best to as early as I can.
-We have finished only one class this week, second class on Web APIs is tonight. So I thought i could at least make my plan of attack and set up my HTML and CSS. As they will be pretty easy to get out of the way. 
+Live Link: https://katemccoll.github.io/Coding_Quiz/
+
+Technologies Used: HTML, CSS, JavaScript
 
 
 ## User Story
@@ -218,3 +218,5 @@ Lastly you will see that in your navbar, there is your timer and 'View Highscore
 This is my Coding Quiz Challenge, I hope you enjoyed it!
 
 Note: I added media queries in my CSS too. So that means if you were to to use it on the Tablet or phone, it would still look correct and not bunched together.
+
+For any questions or more information, please feel free to email me.
